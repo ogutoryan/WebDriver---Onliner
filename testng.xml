@@ -3,22 +3,22 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
 <suite name="OnlinerTestSuite" thread-count="1" parallel="tests">
-    <!--<test name="FirefoxTest">-->
-        <!--<parameter name="browser" value="FireFox" />-->
-        <!--<classes>-->
-            <!--<class name="parallelTest.Main"/>-->
-        <!--</classes>-->
-    <!--</test>-->
+    <test name="FirefoxTest">
+        <parameter name="browser" value="FireFox" />
+        <classes>
+            <class name="parallelTest.Main"/>
+        </classes>
+    </test>
     <!--<test name="IETest">-->
         <!--<parameter name="browser" value="IE" />-->
         <!--<classes>-->
             <!--<class name="parallelTest.Main"/>-->
         <!--</classes>-->
     <!--</test>-->
-    <test name="ChromeTest">
-        <parameter name="browser" value="Chrome" />
-        <classes>
-            <class name="parallelTest.Main"/>
-        </classes>
-    </test>
+    <!--<test name="ChromeTest">-->
+        <!--<parameter name="browser" value="Chrome" />-->
+        <!--<classes>-->
+            <!--<class name="parallelTest.Main"/>-->
+        <!--</classes>-->
+    <!--</test>-->
 </suite>

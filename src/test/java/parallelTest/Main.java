@@ -48,22 +48,23 @@ public class Main {
 
     @Test
     public void onlinerTests() throws InterruptedException {
-//Зайти на страницу http://onliner.by/
+        // Go to http://onliner.by/
         driver.get("https://www.onliner.by/");
         Assert.assertEquals(driver.getTitle(), "Onliner.by");
 
-//Выполнить процесс авторизации
-        Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
-                .withTimeout(30, TimeUnit.SECONDS)
-                .pollingEvery(5, TimeUnit.SECONDS)
-                .ignoring(NoSuchElementException.class);
+        // Authorize as registered user
+//        Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
+//                .withTimeout(30, TimeUnit.SECONDS)
+//                .pollingEvery(5, TimeUnit.SECONDS)
+//                .ignoring(NoSuchElementException.class);
 
-        WebElement btnLogin = wait.until(new Function<WebDriver, WebElement>() {
-            public WebElement apply(WebDriver driver) {
-                return driver.findElement(By.xpath("//div[@class='auth-bar__item auth-bar__item--text']"));
-            }
-        });
-//        WebElement btnLogin = driver.findElement(By.xpath("//div[@class='auth-bar__item auth-bar__item--text']"));
+//        WebElement btnLogin = wait.until(new Function<WebDriver, WebElement>() {
+//            public WebElement apply(WebDriver driver) {
+//                return driver.findElement(By.xpath("//div[@class='auth-bar__item auth-bar__item--text']"));
+//            }
+//        });
+
+        WebElement btnLogin = driver.findElement(By.xpath("//div[@class='auth-bar__item auth-bar__item--text']"));
         btnLogin.click();
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         WebElement login = driver.findElement(By.xpath("//input[contains(@placeholder,'Ник или e-mail')]"));
@@ -72,21 +73,23 @@ public class Main {
         driver.findElement(By.xpath("//input[contains(@placeholder,'Пароль')]")).sendKeys("onliner123");
 
         new WebDriverWait(driver, 30)
-                .until(ExpectedConditions.presenceOfElementLocated(By.className("auth-box__auth-submit")));
-
+                .until(ExpectedConditions.elementToBeClickable(By.className("auth-box__auth-submit")));
         driver.findElement(By.className("auth-box__auth-submit")).click();
+
         new WebDriverWait(driver, 30)
-                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[contains(@data-bind, 'visible: $root.currentUser.id()')]")));
+                .until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@data-bind, 'visible: $root.currentUser.id()')]")));
 
         WebElement userProfile = driver.findElement(By.xpath("//div[contains(@data-bind, 'visible: $root.currentUser.id()')]"));
         Assert.assertEquals(userProfile.isDisplayed(), true);
 
-//Перейти в раздел каталога и получить список популярных категорий товаров и перейти на случайную категорию из списка
+        // Go to Catalog
+        // Get popular categories
         driver.findElement(By.xpath("//span[contains(@class,'b-main-navigation__text') and contains(.,'Каталог')]")).click();
         WebElement popularCategories = driver.findElement(By.className("catalog-bar__list"));
         popularCategories.getAttribute("catalog-bar__list");
-
         System.out.println(popularCategories.getText());
+
+        // Go to random popular category
         List<WebElement> listOfCategories = driver.findElements(By.className("catalog-bar__item"));
 
         int countOfVisibleElements = 0;
@@ -109,14 +112,19 @@ public class Main {
 
         Assert.assertEquals(actualRandomElemenTitle, expectedCategoryTitle);
 
-//Выполнить логаут
+        // Log out as authorized user
         WebElement arrow = driver.findElement(By.className("b-top-profile__item_arrow"));
         arrow.click();
         WebElement logout = new WebDriverWait(driver, 20)
                 .until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='b-top-profile__logout']/a")));
         Actions actions = new Actions(driver);
-        actions.moveToElement(logout);
-        actions.click().build().perform();
+        actions.moveToElement(logout)
+               .click()
+               .build()
+               .perform();
+
+        new WebDriverWait(driver, 10)
+                .until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div//*[contains(text(),'Вход')]")));
         String checkLogout = driver.findElement(By.xpath("//div//*[contains(text(),'Вход')]")).getText();
         Assert.assertEquals(checkLogout,"Вход");
     }
