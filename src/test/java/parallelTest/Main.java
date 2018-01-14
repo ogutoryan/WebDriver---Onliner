@@ -63,6 +63,7 @@ public class Main {
                 return driver.findElement(By.xpath("//div[@class='auth-bar__item auth-bar__item--text']"));
             }
         });
+//        WebElement btnLogin = driver.findElement(By.xpath("//div[@class='auth-bar__item auth-bar__item--text']"));
         btnLogin.click();
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         WebElement login = driver.findElement(By.xpath("//input[contains(@placeholder,'Ник или e-mail')]"));
@@ -74,12 +75,6 @@ public class Main {
                 .until(ExpectedConditions.presenceOfElementLocated(By.className("auth-box__auth-submit")));
 
         driver.findElement(By.className("auth-box__auth-submit")).click();
-        Thread.sleep(5000);
-
-//        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-//        driver.findElement(By.className("b-top-profile__item")).getText();
-//        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-
         new WebDriverWait(driver, 30)
                 .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[contains(@data-bind, 'visible: $root.currentUser.id()')]")));
 
