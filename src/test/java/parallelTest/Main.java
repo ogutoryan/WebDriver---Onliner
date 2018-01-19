@@ -36,6 +36,7 @@ public class Main {
         else if (browser.equalsIgnoreCase("Chrome")) {
             System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
             driver = new ChromeDriver();
+            driver.manage().window().maximize();
         }
         else if (browser.equalsIgnoreCase("IE")) {
             System.setProperty("webdriver.ie.driver", "drivers/IEDriverServer.exe");
@@ -43,6 +44,7 @@ public class Main {
         } else {
             throw new Exception("Browser is not correct");
         }
+
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
@@ -52,19 +54,18 @@ public class Main {
         driver.get("https://www.onliner.by/");
         Assert.assertEquals(driver.getTitle(), "Onliner.by");
 
-        // Authorize as registered user
-//        Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
-//                .withTimeout(30, TimeUnit.SECONDS)
-//                .pollingEvery(5, TimeUnit.SECONDS)
-//                .ignoring(NoSuchElementException.class);
+//         Authorize as registered user
+        Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
+                .withTimeout(30, TimeUnit.SECONDS)
+                .pollingEvery(5, TimeUnit.SECONDS)
+                .ignoring(NoSuchElementException.class);
 
-//        WebElement btnLogin = wait.until(new Function<WebDriver, WebElement>() {
-//            public WebElement apply(WebDriver driver) {
-//                return driver.findElement(By.xpath("//div[@class='auth-bar__item auth-bar__item--text']"));
-//            }
-//        });
+        WebElement btnLogin = wait.until(new Function<WebDriver, WebElement>() {
+            public WebElement apply(WebDriver driver) {
+                return driver.findElement(By.xpath("//div[@class='auth-bar__item auth-bar__item--text']"));
+            }
+        });
 
-        WebElement btnLogin = driver.findElement(By.xpath("//div[@class='auth-bar__item auth-bar__item--text']"));
         btnLogin.click();
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         WebElement login = driver.findElement(By.xpath("//input[contains(@placeholder,'Ник или e-mail')]"));
@@ -82,8 +83,7 @@ public class Main {
         WebElement userProfile = driver.findElement(By.xpath("//div[contains(@data-bind, 'visible: $root.currentUser.id()')]"));
         Assert.assertEquals(userProfile.isDisplayed(), true);
 
-        // Go to Catalog
-        // Get popular categories
+        // Go to Catalog and get popular categories
         driver.findElement(By.xpath("//span[contains(@class,'b-main-navigation__text') and contains(.,'Каталог')]")).click();
         WebElement popularCategories = driver.findElement(By.className("catalog-bar__list"));
         popularCategories.getAttribute("catalog-bar__list");
@@ -134,6 +134,3 @@ public class Main {
         driver.close();
     }
 }
-
-
-//onliner.olya@gmail.com /onliner.test.olya@gmail.com / onliner123

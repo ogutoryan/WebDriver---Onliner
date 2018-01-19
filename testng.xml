@@ -9,16 +9,16 @@
             <class name="parallelTest.Main"/>
         </classes>
     </test>
-    <!--<test name="IETest">-->
-        <!--<parameter name="browser" value="IE" />-->
-        <!--<classes>-->
-            <!--<class name="parallelTest.Main"/>-->
-        <!--</classes>-->
-    <!--</test>-->
-    <!--<test name="ChromeTest">-->
-        <!--<parameter name="browser" value="Chrome" />-->
-        <!--<classes>-->
-            <!--<class name="parallelTest.Main"/>-->
-        <!--</classes>-->
-    <!--</test>-->
+    <test name="IETest">
+        <parameter name="browser" value="IE" />
+        <classes>
+            <class name="parallelTest.Main"/>
+        </classes>
+    </test>
+    <test name="ChromeTest">
+        <parameter name="browser" value="Chrome" />
+        <classes>
+            <class name="parallelTest.Main"/>
+        </classes>
+    </test>
 </suite>
