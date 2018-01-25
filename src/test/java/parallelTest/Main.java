@@ -50,11 +50,9 @@ public class Main {
 
     @Test
     public void onlinerTests() throws InterruptedException {
-        // Go to http://onliner.by/
         driver.get("https://www.onliner.by/");
         Assert.assertEquals(driver.getTitle(), "Onliner.by");
 
-//         Authorize as registered user
         Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
                 .withTimeout(30, TimeUnit.SECONDS)
                 .pollingEvery(5, TimeUnit.SECONDS)
@@ -83,13 +81,11 @@ public class Main {
         WebElement userProfile = driver.findElement(By.xpath("//div[contains(@data-bind, 'visible: $root.currentUser.id()')]"));
         Assert.assertEquals(userProfile.isDisplayed(), true);
 
-        // Go to Catalog and get popular categories
         driver.findElement(By.xpath("//span[contains(@class,'b-main-navigation__text') and contains(.,'Каталог')]")).click();
         WebElement popularCategories = driver.findElement(By.className("catalog-bar__list"));
         popularCategories.getAttribute("catalog-bar__list");
         System.out.println(popularCategories.getText());
 
-        // Go to random popular category
         List<WebElement> listOfCategories = driver.findElements(By.className("catalog-bar__item"));
 
         int countOfVisibleElements = 0;
@@ -104,17 +100,13 @@ public class Main {
         int randomElement = (int) Math.floor(Math.random() * countOfVisibleElements);
         String expectedCategoryTitle = listOfCategories.get(randomElement).getText();
         listOfCategories.get(randomElement).click();
-
         String actualRandomElemenTitle = driver.findElement(By.xpath("//h1[@class='schema-header__title']")).getText();
 
         new WebDriverWait(driver, 30)
                 .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//h1[@class='schema-header__title']")));
-
         Assert.assertEquals(actualRandomElemenTitle, expectedCategoryTitle);
 
-        // Log out as authorized user
-        WebElement arrow = driver.findElement(By.className("b-top-profile__item_arrow"));
-        arrow.click();
+        driver.findElement(By.className("b-top-profile__item_arrow")).click();
         WebElement logout = new WebDriverWait(driver, 20)
                 .until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='b-top-profile__logout']/a")));
         Actions actions = new Actions(driver);
