@@ -6,19 +6,19 @@
     <test name="FirefoxTest">
         <parameter name="browser" value="FireFox" />
         <classes>
-            <class name="parallelTest.Main"/>
+            <class name="parallelTest.MainTest"/>
         </classes>
     </test>
     <test name="IETest">
         <parameter name="browser" value="IE" />
         <classes>
-            <class name="parallelTest.Main"/>
+            <class name="parallelTest.MainTest"/>
         </classes>
     </test>
     <test name="ChromeTest">
         <parameter name="browser" value="Chrome" />
         <classes>
-            <class name="parallelTest.Main"/>
+            <class name="parallelTest.MainTest"/>
         </classes>
     </test>
 </suite>
